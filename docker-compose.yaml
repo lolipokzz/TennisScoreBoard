@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: postgres
+  tomcat:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      DB.URL: "jdbc:postgresql://localhost:5432/TennisScoreboard"
+      DB.USERNAME: "postgres"
+      DB.PASSWORD: "1234"
+
+volumes:
+  pg_data:
